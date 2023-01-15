@@ -25,3 +25,7 @@ volumes:
   mysql_db:
     external: false
 
+networks:
+  default:
+    name: news-app-network
+
