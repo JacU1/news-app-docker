@@ -6,20 +6,26 @@ services:
     build:
       dockerfile: news-app-angular/Dockerfile
     ports:
-      - "80:80"
+      - "9080:80"
   database:
     container_name: news-app-db
     image: mysql:8.0.31-debian
     volumes:
       - mysql_db:/data
+    ports:
+      - "9003:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root
   server: 
     container_name: news-app-api
-    image: news-app-api
     build: 
       context: .
       dockerfile: ./News-App-API/Dockerfile
+    ports:
+      - "9002:9002"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:9002
 
 volumes:
   mysql_db:
