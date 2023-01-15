@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  frontend:
+    container_name: news-app-angular
+    build:
+      dockerfile: news-app-angular/Dockerfile
+    ports:
+      - "80:80"
+  database:
+    container_name: news-app-db
+    image: mysql:8.0.31-debian
+    volumes:
+      - mysql_db:/data
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+  server: 
+    container_name: news-app-api
+    image: news-app-api
+    build: 
+      context: .
+      dockerfile: ./News-App-API/Dockerfile
+
+volumes:
+  mysql_db:
+    external: false
+
+networks:
+  default:
+    name: news-app-network
+
